@@ -8,21 +8,25 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-public class AppConfig {
+@Configuration
+public class AppConfig { /** DI 컨테이너, 어셈블러, 오브젝트 팩토리 **/
     // Dependency Injection : 의존관계 주입
+    @Bean
     public MemberService memberService() {
         return new MemberServiceImpl(new MemoryMemberRepository());
     }
-
+    @Bean
     public MemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
-
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
-
+    @Bean
     public DiscountPolicy discountPolicy() {
 //        return new FixDiscountPolicy();
         return new RateDiscountPolicy();
